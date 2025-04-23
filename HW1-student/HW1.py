@@ -1,7 +1,7 @@
 # PIC 16A HW1
-# Name:
-# Collaborators:
-# Date:
+# Name: Palash Raval
+# Collaborators: None
+# Date: May 5, 2025
 
 import random # This is only needed in Problem 5
 
@@ -19,7 +19,9 @@ def print_s(s):
 # you do not have to add docstrings for the rest of these print_s_* functions.
 
 def print_s_lines(s):
-    pass # replace with your code. 
+    new_s = s.split(":")
+    for each in new_s:
+        print(each.strip().strip())
 
 def print_s_parts(s):
     pass # replace with your code
