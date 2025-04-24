@@ -23,30 +23,64 @@ def print_s_lines(s):
     for each in new_s:
         print(each.strip().strip())
 
+
 def print_s_parts(s):
-    pass # replace with your code
+    for one_line in s.strip().split('\n'):
+        first_word = one_line.split()[0]
+        print(first_word)
+
 
 def print_s_some(s):
-    pass # replace with your code
+    for tab_in_line in s.split('\n'):
+        if "\t" in tab_in_line:
+            print(tab_in_line)
+
 
 def print_s_change(s):
-    pass # replace with your code
+    s = s.replace("math", "data science")
+    s = s.replace("long division", "machine learning")
+    print(s)
 
 
 # Problem 2 
 
 def make_count_dictionary(L):
-    ''' WRITE YOUR OWN DOCSTRING HERE
+    ''' 
+    This function will give the counts of the unique elements within a provided list.
+    The input for this function is L, which should be a list data type. This will be the list
+    that you want the count information for each element about.
+    The output for this function is D, which is a dictionary data type. This will provide you each unique value 
+    within your list and the number of times this value is present in your provided list.
     '''
-    pass # replace with your code
+    D = {}
+    list_as_set = set(L)
+
+    for element in list_as_set:
+        D[element] = L.count(element)    
+
+    return(D)
 
 
 # Problem 3
 
 def gimme_an_odd_number():
-    ''' WRITE YOUR OWN DOCSTRING HERE
+    ''' 
+    This function will continue to ask the user to input a number until an odd number is entered. 
+    Once this happens, the function will provide the user with all the inputs that they entered until an odd number 
+    was entered.
+    The input for this function will be a string, whole number that will be converted into an integer.
+    The output for this function will be a list that shows all of the inputs that the user made throughout the function call.
     '''
-    pass # replace with your code
+    number_input = int(input("Please enter an integer."))
+
+    number_list = []
+    while number_input % 2 == 0:
+        number_list.append(number_input)
+        number_input = int(input("Please enter an integer."))
+    
+    number_list.append(number_input)
+    return(number_list)
+
 
 # Problem 4
 
