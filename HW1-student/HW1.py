@@ -131,7 +131,7 @@ def get_list_of_even_powers(L, k):
 
 # Problem 5
 
-def random_walk(ub, lb):
+def random_walk(lb, ub):
     ''' 
     This function will do a random walk based on the starting position of 0 and determine
     the direction of travel based on a coin flip (-1 for tails, 1 for heads). This will continue
