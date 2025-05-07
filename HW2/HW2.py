@@ -41,7 +41,50 @@ def count_ngrams(s, n = 1):
 
 
 
-def markov_text(s, n, length, seed):
-    """WRITE DOCSTRING HERE
+def markov_text(s, n, seed, length = 100):
     """
-    pass # replace with your code
+    This function will generate new text starting with a provided string(seed). It will look at all the
+    chunks based on a string (s) and store the chunks that begin with the final three characters of seed.
+    It will create a dictionary of occurences for each chunk and use that to determine the respective weights.
+    This function will then randomly select one of these chunks and then add the final character in this string
+    to the end of the seed string. It will continue looping through this until the length specified is reached plus
+    the length of the seed.
+    There are four inputs for this function: a string (s), an integer (n), an integer (length), and a string (seed).
+    The output for this function will be a string that begins with the seed plus the generated characters that reach
+    the specified length.
+    """
+    check_start_dictionary = count_ngrams(s, n + 1)
+    start_string = seed
+
+    while len(start_string) < (length + len(seed)):
+
+        ending_string = start_string[-n:]
+        storage_list = []
+        storage_dictionary = {}
+
+        for key in check_start_dictionary.keys():
+            if key.startswith(ending_string):
+                storage_list.append(key)
+
+        
+        for element in storage_list:
+            if element in storage_dictionary.keys():
+                storage_dictionary[element] += 1
+            else:
+                storage_dictionary[element] = 1
+
+
+        weights_list = []
+        for value in storage_dictionary.values():
+            weights_list.append(value/len(storage_dictionary.values()))
+
+
+        new_string = random.choices(list(storage_dictionary.keys()), weights_list)
+
+        new_string = new_string[-1]
+
+        start_string = start_string + new_string[-1]
+
+
+    return start_string
+
