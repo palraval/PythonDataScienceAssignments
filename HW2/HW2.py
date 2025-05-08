@@ -32,9 +32,10 @@ def count_ngrams(s, n = 1):
     ngram_counter = {}
 
     for i in range(len(s)):
-        if s[i:i + n] in ngram_counter.keys():
+        if (s[i:i + n] in ngram_counter.keys()) & (len(s[i:i + n]) == n):
                 ngram_counter[s[i: i + n]] += 1
-        else:
+    
+        elif (s[i:i + n] not in ngram_counter.keys()) & (len(s[i:i + n]) == n):
             ngram_counter[s[i: i + n]] = 1
             
     return ngram_counter
