@@ -42,7 +42,7 @@ def count_ngrams(s, n = 1):
 
 
 
-def markov_text(s, n, seed, length = 100):
+def markov_text(s, n, length = 100, seed = "Emma Woodhouse"):
     """
     This function will generate new text starting with a provided string(seed). It will look at all the
     chunks based on a string (s) and store the chunks that begin with the final three characters of seed.
@@ -57,7 +57,7 @@ def markov_text(s, n, seed, length = 100):
     check_start_dictionary = count_ngrams(s, n + 1)
     start_string = seed
 
-    while len(start_string) < (length + len(seed)):
+    while len(start_string) - len(seed) < length:
 
         ending_string = start_string[-n:]
         storage_list = []
@@ -69,23 +69,17 @@ def markov_text(s, n, seed, length = 100):
 
         
         for element in storage_list:
-            if element in storage_dictionary.keys():
-                storage_dictionary[element] += 1
-            else:
-                storage_dictionary[element] = 1
+            storage_dictionary[element] = check_start_dictionary[element]
 
 
         weights_list = []
         for value in storage_dictionary.values():
-            weights_list.append(value/len(storage_dictionary.values()))
+            weights_list.append(value/sum(storage_dictionary.values()))
 
 
-        new_string = random.choices(list(storage_dictionary.keys()), weights_list)
-
-        new_string = new_string[-1]
+        new_string = random.choices(list(storage_dictionary.keys()), weights_list)[0]
 
         start_string = start_string + new_string[-1]
 
-
-    return start_string
+    return(start_string)
 
