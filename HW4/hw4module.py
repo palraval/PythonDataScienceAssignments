@@ -14,10 +14,12 @@ def parse_actor_page(dataframe, link):
         as a pandas dataframe)
     """
 
-    
+    full_link = f"https://themoviedb.org/person/{link}"
+
+
 # text for the html code from the provided link
-    soup = BeautifulSoup(requests.get(link).text)
-    
+    soup = BeautifulSoup(requests.get(full_link).text)
+
 
 # creates two empty lists to be used later
     filmography_list = []
@@ -25,12 +27,17 @@ def parse_actor_page(dataframe, link):
 
 
 # isolates the location of the table in the html link containing filmography information
-    acting_table_values = soup.select_one('h3.zero')
-    full_values = acting_table_values.find_next('table')
+    # acting_table_values = soup.select_one('div.credits_list h3.zero')
+    # full_values = acting_table_values.find_next('table')
+    acting_table_values = soup.select('div.credits_list h3')
+    for a in acting_table_values:
+        if a.text == 'Acting':
+            acting_table_values = a.find_next('table')
+            break
 
 
 # adds each item in the actor's filmography table into the list called 'filmography_list'
-    for entry in full_values.select('a.tooltip'):
+    for entry in acting_table_values.select('a.tooltip'):
         filmography_list.append(entry.text)
 
 
@@ -69,6 +76,7 @@ def parse_full_credits(link):
         as a pandas dataframe)
     """
 
+    link = f"https://www.themoviedb.org/movie/{link}/cast"
 
 # defines an empty list to be used later
     cast_link_list = []
@@ -95,13 +103,9 @@ def parse_full_credits(link):
 # each full url is then given to the parse_actor_page() to get all the actors and their filmographies
 # saves the finished dataframe given by parse_actor_page() as 'df'
     for cast_link in cast_link_list:
-        new_link = "https://themoviedb.org" + cast_link
-        df = parse_actor_page(df, new_link)
+        cast_link = cast_link.split('/')[-1]
+        df = parse_actor_page(df, cast_link)
     
-    
-    # df['first_listing'] = df['movie_or_TV_name'].apply(lambda x:x[0])
-    # df = df.sort_values(by = ['actor', 'first_listing']).drop(columns = 'first_listing')
-
 
 # the dataframe 'df' is sorted alphabetically based on actor's name first and then item in their filmography
     df = df.sort_values(by = ['actor', 'movie_or_TV_name'])
